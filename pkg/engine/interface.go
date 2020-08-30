@@ -19,3 +19,10 @@ type Interface interface {
 	GetCurrentMetadata() interface{}
 	GetNextMetadata() interface{}
 }
+
+const PACKAGR_ENGINE_TYPE_CHEF = "chef"
+const PACKAGR_ENGINE_TYPE_GENERIC = "generic"
+const PACKAGR_ENGINE_TYPE_GOLANG = "golang"
+const PACKAGR_ENGINE_TYPE_NODE = "node"
+const PACKAGR_ENGINE_TYPE_PYTHON = "python"
+const PACKAGR_ENGINE_TYPE_RUBY = "ruby"

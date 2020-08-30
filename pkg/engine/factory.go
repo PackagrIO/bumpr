@@ -13,17 +13,17 @@ func Create(engineType string, pipelineData *pipeline.Data, configImpl config.In
 	var eng Interface
 
 	switch engineType {
-	case "chef":
+	case PACKAGR_ENGINE_TYPE_CHEF:
 		eng = new(engineChef)
-	case "generic":
+	case PACKAGR_ENGINE_TYPE_GENERIC:
 		eng = new(engineGeneric)
-	case "golang":
+	case PACKAGR_ENGINE_TYPE_GOLANG:
 		eng = new(engineGolang)
-	case "node":
+	case PACKAGR_ENGINE_TYPE_NODE:
 		eng = new(engineNode)
-	case "python":
+	case PACKAGR_ENGINE_TYPE_PYTHON:
 		eng = new(enginePython)
-	case "ruby":
+	case PACKAGR_ENGINE_TYPE_RUBY:
 		eng = new(engineRuby)
 	default:
 		return nil, errors.EngineUnspecifiedError(fmt.Sprintf("Unknown Engine Type: %s", engineType))

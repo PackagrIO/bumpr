@@ -160,10 +160,8 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJ
 github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/oklog/ulid v1.3.1/go.mod h1:CirwcVhetQ6Lv90oh/F+FBtV6XMibvdAFo93nm5qn4U=
-github.com/packagrio/go-common v0.0.0-20200830190105-730174f6d0e6 h1:AmKvq1uSePoTMlss9NFlTvHk0j4zEUOhJEoW8OH/bH0=
-github.com/packagrio/go-common v0.0.0-20200830190105-730174f6d0e6/go.mod h1:OSkfXgto4OggnZJc/rxlfLfY3ATHXPivEQ3n8kkfVyI=
-github.com/packagrio/go-common v0.0.0-20200830192557-7b4ed69b53e0 h1:Ip+YSUYDxQK/wmWtWbBqgy9XpLoFIPBpaRp/qRJ0f7U=
-github.com/packagrio/go-common v0.0.0-20200830192557-7b4ed69b53e0/go.mod h1:hRA2jIjZwvrBKp6zOHnFzmdCfSWnxX8rbwmeF0R9qcQ=
+github.com/packagrio/go-common v0.0.0-20200830200102-96de15217cdf h1:FETH+EqGxjTarPwwQCmxwKjksH6GxfC9doofVn3bm3s=
+github.com/packagrio/go-common v0.0.0-20200830200102-96de15217cdf/go.mod h1:hRA2jIjZwvrBKp6zOHnFzmdCfSWnxX8rbwmeF0R9qcQ=
 github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
 github.com/pelletier/go-toml v1.2.0 h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181zc=
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=
