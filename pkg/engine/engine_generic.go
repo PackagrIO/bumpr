@@ -30,7 +30,7 @@ func (g *engineGeneric) Init(pipelineData *pipeline.Data, configData config.Inte
 	g.NextMetadata = new(metadata.GenericMetadata)
 
 	//set command defaults (can be overridden by repo/system configuration)
-	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, `version := "%d.%d.%d"`)
+	g.Config.SetDefault(config.PACKAGR_GENERIC_VERSION_TEMPLATE, `version := "%d.%d.%d"`)
 	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, "VERSION")
 	return nil
 }
@@ -106,7 +106,7 @@ func (g *engineGeneric) writeNextMetadata(gitLocalPath string) error {
 		return nerr
 	}
 
-	template := g.Config.GetString("generic_version_template")
+	template := g.Config.GetString(config.PACKAGR_GENERIC_VERSION_TEMPLATE)
 	versionContent := fmt.Sprintf(template, v.Major(), v.Minor(), v.Patch())
 
 	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), []byte(versionContent), 0644)

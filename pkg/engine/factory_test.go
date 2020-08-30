@@ -49,7 +49,7 @@ func (suite *FactoryTestSuite) TestCreate_Invalid() {
 
 func (suite *FactoryTestSuite) TestCreate_Chef() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//test
 	testEngine, cerr := engine.Create("chef", suite.PipelineData, suite.Config, suite.Scm)
@@ -76,7 +76,7 @@ func (suite *FactoryTestSuite) TestCreate_Golang() {
 
 func (suite *FactoryTestSuite) TestCreate_Node() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//test
 	testEngine, cerr := engine.Create("node", suite.PipelineData, suite.Config, suite.Scm)
@@ -100,7 +100,7 @@ func (suite *FactoryTestSuite) TestCreate_Python() {
 
 func (suite *FactoryTestSuite) TestCreate_Ruby() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//test
 	testEngine, cerr := engine.Create("ruby", suite.PipelineData, suite.Config, suite.Scm)
