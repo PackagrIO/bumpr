@@ -18,9 +18,9 @@ func TestConfiguration_init_ShouldCorrectlyInitializeConfiguration(t *testing.T)
 	testConfig, _ := config.Create()
 
 	//assert
-	require.Equal(t, "generic", testConfig.GetString("package_type"), "should populate package_type with generic default")
-	require.Equal(t, "default", testConfig.GetString("scm"), "should populate scm with default")
-	require.Equal(t, "patch", testConfig.GetString("version_bump_type"), "should populate runner with default")
+	require.Equal(t, "generic", testConfig.GetString(config.PACKAGR_PACKAGE_TYPE), "should populate package_type with generic default")
+	require.Equal(t, "default", testConfig.GetString(config.PACKAGR_SCM), "should populate scm with default")
+	require.Equal(t, "patch", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate runner with default")
 }
 
 func TestConfiguration_init_EnvVariablesShouldLoadProperly(t *testing.T) {
@@ -31,7 +31,7 @@ func TestConfiguration_init_EnvVariablesShouldLoadProperly(t *testing.T) {
 	testConfig, _ := config.Create()
 
 	//assert
-	require.Equal(t, "major", testConfig.GetString("version_bump_type"), "should populate Engine Version Bump Type from environmental variable")
+	require.Equal(t, "major", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate Engine Version Bump Type from environmental variable")
 
 	//teardown
 	os.Unsetenv("PACKAGR_VERSION_BUMP_TYPE")

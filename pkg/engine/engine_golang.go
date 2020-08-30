@@ -28,15 +28,15 @@ type engineGolang struct {
 	NextMetadata    *metadata.GolangMetadata
 }
 
-func (g *engineGolang) Init(pipelineData *pipeline.Data, config config.Interface, sourceScm scm.Interface) error {
+func (g *engineGolang) Init(pipelineData *pipeline.Data, configData config.Interface, sourceScm scm.Interface) error {
 	g.Scm = sourceScm
-	g.Config = config
+	g.Config = configData
 	g.PipelineData = pipelineData
 	g.CurrentMetadata = new(metadata.GolangMetadata)
 	g.NextMetadata = new(metadata.GolangMetadata)
 
 	//set command defaults (can be overridden by repo/system configuration)
-	g.Config.SetDefault("engine_version_metadata_path", "pkg/version/version.go")
+	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, "pkg/version/version.go")
 	var scmDomain string
 	if g.Config.GetString("scm") == "bitbucket" {
 		scmDomain = "bitbucket.org"
@@ -90,8 +90,8 @@ func (g *engineGolang) ValidateTools() error {
 func (g *engineGolang) BumpVersion() error {
 	//validate that the chef metadata.rb file exists
 
-	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("version_metadata_path"))) {
-		return errors.EngineBuildPackageInvalid(fmt.Sprintf("%s file is required to process Go library", g.Config.GetString("engine_version_metadata_path")))
+	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))) {
+		return errors.EngineBuildPackageInvalid(fmt.Sprintf("%s file is required to process Go library", g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 	}
 
 	// bump up the go package version
@@ -133,7 +133,7 @@ func (g *engineGolang) customGopathEnv() []string {
 
 func (g *engineGolang) retrieveCurrentMetadata(gitLocalPath string) error {
 
-	versionContent, rerr := ioutil.ReadFile(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("version_metadata_path")))
+	versionContent, rerr := ioutil.ReadFile(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 	if rerr != nil {
 		return rerr
 	}
@@ -169,7 +169,7 @@ func (g *engineGolang) populateNextMetadata() error {
 }
 
 func (g *engineGolang) writeNextMetadata(gitLocalPath string) error {
-	versionPath := path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("version_metadata_path"))
+	versionPath := path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))
 	versionContent, rerr := ioutil.ReadFile(versionPath)
 	if rerr != nil {
 		return rerr
@@ -213,7 +213,7 @@ func (g *engineGolang) parseGoVersion(list []ast.Decl) (string, error) {
 			}
 		}
 	}
-	return "", errors.EngineBuildPackageFailed(fmt.Sprintf("Could not retrieve the version from %s", g.Config.GetString("engine_version_metadata_path")))
+	return "", errors.EngineBuildPackageFailed(fmt.Sprintf("Could not retrieve the version from %s", g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 }
 
 func (g *engineGolang) setGoVersion(list []ast.Decl, version string) ([]ast.Decl, error) {
@@ -231,5 +231,5 @@ func (g *engineGolang) setGoVersion(list []ast.Decl, version string) ([]ast.Decl
 			}
 		}
 	}
-	return nil, errors.EngineBuildPackageFailed(fmt.Sprintf("Could not set the version in %s", g.Config.GetString("version_metadata_path")))
+	return nil, errors.EngineBuildPackageFailed(fmt.Sprintf("Could not set the version in %s", g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 }

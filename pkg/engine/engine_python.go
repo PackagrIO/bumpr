@@ -21,15 +21,15 @@ type enginePython struct {
 	NextMetadata    *metadata.PythonMetadata
 }
 
-func (g *enginePython) Init(pipelineData *pipeline.Data, config config.Interface, sourceScm scm.Interface) error {
+func (g *enginePython) Init(pipelineData *pipeline.Data, configData config.Interface, sourceScm scm.Interface) error {
 	g.Scm = sourceScm
-	g.Config = config
+	g.Config = configData
 	g.PipelineData = pipelineData
 	g.CurrentMetadata = new(metadata.PythonMetadata)
 	g.NextMetadata = new(metadata.PythonMetadata)
 
 	//set command defaults (can be overridden by repo/system configuration)
-	g.Config.SetDefault("engine_version_metadata_path", "VERSION")
+	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, "VERSION")
 	return nil
 }
 
@@ -55,8 +55,8 @@ func (g *enginePython) BumpVersion() error {
 	}
 
 	// check for/create required VERSION file
-	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("engine_version_metadata_path"))) {
-		ioutil.WriteFile(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("engine_version_metadata_path")),
+	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))) {
+		ioutil.WriteFile(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)),
 			[]byte("0.0.0"),
 			0644,
 		)
@@ -64,7 +64,7 @@ func (g *enginePython) BumpVersion() error {
 
 	// bump up the version here.
 	// since there's no standardized way to bump up the version in the setup.py file, we're going to assume that the version
-	// is specified in plain text VERSION file in the root of the source repository. This can be configured via engine_version_metadata_path
+	// is specified in plain text VERSION file in the root of the source repository. This can be configured via version_metadata_path
 	// this is option #4 in the python packaging guide:
 	// https://packaging.python.org/en/latest/single_source_version/#single-sourcing-the-version
 	//
@@ -90,7 +90,7 @@ func (g *enginePython) BumpVersion() error {
 
 func (g *enginePython) retrieveCurrentMetadata(gitLocalPath string) error {
 	//read metadata.json file.
-	versionContent, rerr := ioutil.ReadFile(path.Join(gitLocalPath, g.Config.GetString("engine_version_metadata_path")))
+	versionContent, rerr := ioutil.ReadFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 	if rerr != nil {
 		return rerr
 	}
@@ -111,5 +111,5 @@ func (g *enginePython) populateNextMetadata() error {
 }
 
 func (g *enginePython) writeNextMetadata(gitLocalPath string) error {
-	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString("engine_version_metadata_path")), []byte(g.NextMetadata.Version), 0644)
+	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), []byte(g.NextMetadata.Version), 0644)
 }

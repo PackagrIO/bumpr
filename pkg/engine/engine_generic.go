@@ -22,16 +22,16 @@ type engineGeneric struct {
 	NextMetadata    *metadata.GenericMetadata
 }
 
-func (g *engineGeneric) Init(pipelineData *pipeline.Data, config config.Interface, sourceScm scm.Interface) error {
+func (g *engineGeneric) Init(pipelineData *pipeline.Data, configData config.Interface, sourceScm scm.Interface) error {
 	g.Scm = sourceScm
-	g.Config = config
+	g.Config = configData
 	g.PipelineData = pipelineData
 	g.CurrentMetadata = new(metadata.GenericMetadata)
 	g.NextMetadata = new(metadata.GenericMetadata)
 
 	//set command defaults (can be overridden by repo/system configuration)
-	g.Config.SetDefault("generic_version_template", `version := "%d.%d.%d"`)
-	g.Config.SetDefault("version_metadata_path", "VERSION")
+	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, `version := "%d.%d.%d"`)
+	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, "VERSION")
 	return nil
 }
 
@@ -49,8 +49,8 @@ func (g *engineGeneric) ValidateTools() error {
 func (g *engineGeneric) BumpVersion() error {
 	//validate that the chef metadata.rb file exists
 
-	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString("version_metadata_path"))) {
-		return errors.EngineBuildPackageInvalid(fmt.Sprintf("version file (%s) is required for metadata storage via generic engine", g.Config.GetString("version_metadata_path")))
+	if !utils.FileExists(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))) {
+		return errors.EngineBuildPackageInvalid(fmt.Sprintf("version file (%s) is required for metadata storage via generic engine", g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 	}
 
 	// bump up the go package version
@@ -72,7 +72,7 @@ func (g *engineGeneric) BumpVersion() error {
 //Helpers
 func (g *engineGeneric) retrieveCurrentMetadata(gitLocalPath string) error {
 	//read VERSION file.
-	versionContent, rerr := ioutil.ReadFile(path.Join(gitLocalPath, g.Config.GetString("version_metadata_path")))
+	versionContent, rerr := ioutil.ReadFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)))
 	if rerr != nil {
 		return rerr
 	}
@@ -109,5 +109,5 @@ func (g *engineGeneric) writeNextMetadata(gitLocalPath string) error {
 	template := g.Config.GetString("generic_version_template")
 	versionContent := fmt.Sprintf(template, v.Major(), v.Minor(), v.Patch())
 
-	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString("version_metadata_path")), []byte(versionContent), 0644)
+	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), []byte(versionContent), 0644)
 }

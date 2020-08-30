@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/analogj/go-util/utils"
 	"github.com/packagrio/bumpr/pkg/config"
+	"github.com/packagrio/bumpr/pkg/engine"
 	"github.com/packagrio/bumpr/pkg/version"
+	"github.com/packagrio/go-common/pipeline"
+	"github.com/packagrio/go-common/scm"
 	"github.com/urfave/cli"
 	"log"
 	"os"
@@ -53,16 +56,34 @@ func main() {
 				Action: func(c *cli.Context) error {
 
 					configuration, _ := config.Create()
-					configuration.Set("scm", c.String("scm"))
-					configuration.Set("package_type", c.String("package_type"))
+					configuration.Set(config.PACKAGR_SCM, c.String("scm"))
+					configuration.Set(config.PACKAGR_PACKAGE_TYPE, c.String("package_type"))
 					//config.Set("dry_run", c.String("dry_run"))
 
-					fmt.Println("package type:", configuration.GetString("package_type"))
-					fmt.Println("scm:", configuration.GetString("scm"))
+					fmt.Println("package type:", configuration.GetString(config.PACKAGR_PACKAGE_TYPE))
+					fmt.Println("scm:", configuration.GetString(config.PACKAGR_SCM))
 
-					engine := pkg.Engine{}
-					err := engine.Start(configuration)
+					pipelineData := new(pipeline.Data)
+					sourceScm, err := scm.Create(configuration.GetString(config.PACKAGR_SCM), pipelineData)
 					if err != nil {
+						fmt.Printf("FATAL: %+v\n", err)
+						os.Exit(1)
+					}
+
+					bumpEngine, err := engine.Create(
+						configuration.GetString(config.PACKAGR_PACKAGE_TYPE),
+						pipelineData, configuration, sourceScm)
+					if err != nil {
+						fmt.Printf("FATAL: %+v\n", err)
+						os.Exit(1)
+					}
+
+					if err := bumpEngine.ValidateTools(); err != nil {
+						fmt.Printf("FATAL: %+v\n", err)
+						os.Exit(1)
+					}
+
+					if err := bumpEngine.BumpVersion(); err != nil {
 						fmt.Printf("FATAL: %+v\n", err)
 						os.Exit(1)
 					}

@@ -21,7 +21,7 @@ func (e *engineBase) GenerateNextVersion(currentVersion string) (string, error) 
 		return "", nerr
 	}
 
-	switch bumpType := e.Config.GetString("version_bump_type"); bumpType {
+	switch bumpType := e.Config.GetString(config.PACKAGR_VERSION_BUMP_TYPE); bumpType {
 	case "major":
 		return fmt.Sprintf("%d.%d.%d", v.Major()+1, 0, 0), nil
 	case "minor":

@@ -23,9 +23,9 @@ type configuration struct {
 func (c *configuration) Init() error {
 	c.Viper = viper.New()
 	//set defaults
-	c.SetDefault("package_type", "generic")
-	c.SetDefault("scm", "default")
-	c.SetDefault("version_bump_type", "patch")
+	c.SetDefault(PACKAGR_PACKAGE_TYPE, "generic")
+	c.SetDefault(PACKAGR_SCM, "default")
+	c.SetDefault(PACKAGR_VERSION_BUMP_TYPE, "patch")
 
 	//set the default system config file search path.
 	//if you want to load a non-standard location system config file (~/capsule.yml), use ReadConfig
