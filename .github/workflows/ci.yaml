@@ -1,0 +1,37 @@
+name: CI
+# This workflow is triggered on pushes to the repository.
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    container: golang:1.13
+    env:
+      PROJECT_PATH: /go/src/github.com/packagrio/bumpr
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        env:
+          GOOS: linux
+          GOARCH: amd64
+        run: |
+          mkdir -p $PROJECT_PATH
+          cp -a $GITHUB_WORKSPACE/* $PROJECT_PATH/
+          cd $PROJECT_PATH
+
+          go mod vendor
+
+          go test -v -tags "static" $(go list ./... | grep -v /vendor/)
+
+          go build -ldflags "-X main.goos=linux -X main.goarch=amd64" -o packagr-bumpr-linux-amd64 -tags "static" cmd/bumpr/bumpr.go
+
+          chmod +x packagr-bumpr-linux-amd64
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries
+          path: |
+            ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
+
