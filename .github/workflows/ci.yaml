@@ -3,6 +3,31 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    container: "packagrio/packagr:latest-${{ matrix.package_type }}"
+    env:
+      PROJECT_PATH: /go/src/github.com/packagrio/bumpr
+    strategy:
+      matrix:
+        package_type: ['chef', 'golang', 'node', 'python', 'ruby']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Test
+        env:
+          GOOS: linux
+          GOARCH: amd64
+        run: |
+          mkdir -p $PROJECT_PATH
+          cp -a $GITHUB_WORKSPACE/* $PROJECT_PATH/
+          cd $PROJECT_PATH
+
+          go mod vendor
+
+          go test -v -tags "static ${{ matrix.package_type }}" $(go list ./... | grep -v /vendor/)
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -34,4 +59,3 @@ jobs:
           name: binaries
           path: |
             ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
-
