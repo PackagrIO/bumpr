@@ -38,7 +38,7 @@ func (g *engineGolang) Init(pipelineData *pipeline.Data, configData config.Inter
 	//set command defaults (can be overridden by repo/system configuration)
 	g.Config.SetDefault(config.PACKAGR_VERSION_METADATA_PATH, "pkg/version/version.go")
 	var scmDomain string
-	if g.Config.GetString("scm") == "bitbucket" {
+	if g.Config.GetString(config.PACKAGR_SCM) == "bitbucket" {
 		scmDomain = "bitbucket.org"
 	} else {
 		scmDomain = "github.com"
@@ -111,25 +111,6 @@ func (g *engineGolang) BumpVersion() error {
 }
 
 //private Helpers
-
-func (g *engineGolang) customGopathEnv() []string {
-	currentEnv := os.Environ()
-	updatedEnv := []string{fmt.Sprintf("GOPATH=%s", g.PipelineData.GolangGoPath)}
-
-	for i := range currentEnv {
-		if strings.HasPrefix(currentEnv[i], "GOPATH=") {
-			//skip
-			continue
-		} else if strings.HasPrefix(currentEnv[i], "PATH=") {
-			updatedEnv = append(updatedEnv, fmt.Sprintf("PATH=%s/bin:%s", g.PipelineData.GolangGoPath, currentEnv[i]))
-		} else {
-			//add all environmental variables that are not GOPATH
-			updatedEnv = append(updatedEnv, currentEnv[i])
-		}
-	}
-
-	return updatedEnv
-}
 
 func (g *engineGolang) retrieveCurrentMetadata(gitLocalPath string) error {
 
