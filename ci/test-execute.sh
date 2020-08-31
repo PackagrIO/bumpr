@@ -18,16 +18,9 @@ echo "" > "/coverage/coverage-${1}.txt"
 echo "Printing current folder structure"
 ls -alt
 
-for d in $(go list ./...); do
-    # determine the output path
-    TEST_BINARY_PATH=$(echo "$d" | sed -e "s/^github.com\/packagrio\/bumpr\///")
-    TEST_BINARY="test_binary_${1}"
-
-    echo "Looking for TEST BINARY: ${TEST_BINARY_PATH}/${TEST_BINARY}"
-
-    if [ -f "${TEST_BINARY_PATH}/${TEST_BINARY}" ]; then
-        echo "Found TEST BINARY"
-        pushd ${TEST_BINARY_PATH}
+for d in $(find . -type f -name "test_binary_*"); do
+    echo "Found TEST BINARY: ${d}"
+        pushd $(dirname "$d")
 
         eval "./${TEST_BINARY} -test.coverprofile=profile.out"
         if [ -f profile.out ]; then
@@ -35,5 +28,4 @@ for d in $(go list ./...); do
             rm profile.out
         fi
         popd
-    fi
 done
