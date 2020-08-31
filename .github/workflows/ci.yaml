@@ -52,7 +52,7 @@ jobs:
         run: |
 
           find "$PWD" -type f
-          chmod +x .
+          chmod -R +x .
           ./test-execute.sh ${{ matrix.package_type }}
       - name: Archive
         uses: actions/upload-artifact@v2
