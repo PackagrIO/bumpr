@@ -3,10 +3,10 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  test:
-    name: Test
+  build-test:
+    name: Build Test
     runs-on: ubuntu-latest
-    container: "packagrio/packagr:latest-${{ matrix.package_type }}"
+    container: golang:1.13
     env:
       PROJECT_PATH: /go/src/github.com/packagrio/bumpr
     strategy:
@@ -26,8 +26,24 @@ jobs:
 
           go mod vendor
           ./ci/test-build.sh ${{ matrix.package_type }}
-
-
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: "test-binary-${{ matrix.package_type }}"
+          path: /caches/test-binaries/
+  test:
+    name: Test
+    needs: build-test
+    runs-on: ubuntu-latest
+    container: "packagrio/packagr:latest-${{ matrix.package_type }}"
+    strategy:
+      matrix:
+        package_type: ['chef', 'golang', 'node', 'python', 'ruby']
+    steps:
+      - name: Download test binaries
+        uses: actions/download-artifact@v2
+        with:
+          name: "test-binary-${{ matrix.package_type }}"
       - name: Test
         env:
           GOOS: linux
@@ -41,9 +57,9 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v2
         with:
-          name: binaries
-          path: |
-            /coverage/coverage-${{ matrix.package_type }}.txt
+          name: test-coverage
+          path: /coverage/coverage-${{ matrix.package_type }}.txt
+
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -72,6 +88,5 @@ jobs:
       - name: Archive
         uses: actions/upload-artifact@v2
         with:
-          name: binaries
-          path: |
-            ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
+          name: bumpr-binary
+          path: ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
