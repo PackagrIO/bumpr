@@ -36,6 +36,7 @@ jobs:
     needs: build-test
     runs-on: ubuntu-latest
     container: "packagrio/packagr:latest-${{ matrix.package_type }}"
+
     strategy:
       matrix:
         package_type: ['chef', 'golang', 'node', 'python', 'ruby']
@@ -49,9 +50,6 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          mkdir -p $PROJECT_PATH
-          cp -a $GITHUB_WORKSPACE/* $PROJECT_PATH/
-          cd $PROJECT_PATH
 
           ./ci/test-execute.sh ${{ matrix.package_type }}
       - name: Archive

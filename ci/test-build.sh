@@ -14,6 +14,11 @@ for d in $(go list ./...); do
     mkdir -p /caches/test-binaries/${OUTPUT_PATH}
     go test -mod vendor -race -covermode=atomic -tags="static $1" -c -o=/caches/test-binaries/${OUTPUT_PATH}/test_binary_${1} $d
 
-    # TODO: copy the testdata directory for this binary if present.
-    # parentdir="$(dirname "$dir")"
+    if [ -d "${d}/testdata" ];
+    then
+      # copy the testdata directory for this binary if present.
+      mkdir -p /caches/test-binaries/${OUTPUT_PATH}/testdata
+      cp -r "${d}/testdata/." /caches/test-binaries/${OUTPUT_PATH}/testdata
+    fi
+
 done

@@ -16,6 +16,7 @@ echo "" > "/coverage/coverage-${1}.txt"
 
 
 echo "Printing current folder structure"
+ls -alt
 
 for d in $(go list ./...); do
     # determine the output path
@@ -36,5 +37,3 @@ for d in $(go list ./...); do
         popd
     fi
 done
-
-ls -alt /coverage
