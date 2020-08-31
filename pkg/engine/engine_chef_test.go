@@ -28,7 +28,7 @@ func TestEngineChef_Create(t *testing.T) {
 	testConfig.Set(config.PACKAGR_SCM, "github")
 	testConfig.Set(config.PACKAGR_PACKAGE_TYPE, "chef")
 	pipelineData := new(pipeline.Data)
-	githubScm, err := scm.Create(engine.PACKAGR_ENGINE_TYPE_CHEF, pipelineData, testConfig, nil)
+	githubScm, err := scm.Create(engine.PACKAGR_ENGINE_TYPE_CHEF, pipelineData)
 	require.NoError(t, err)
 
 	//test
