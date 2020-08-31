@@ -103,7 +103,7 @@ func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump() {
 	require.NoError(suite.T(), err)
 
 	//test
-	berr := nodeEngine.AssembleStep()
+	berr := nodeEngine.BumpVersion()
 	require.NoError(suite.T(), berr)
 
 	//assert
@@ -127,7 +127,7 @@ func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump_WithoutPackageJson(
 	require.NoError(suite.T(), err)
 
 	//test
-	berr := nodeEngine.AssembleStep()
+	berr := nodeEngine.BumpVersion()
 
 	//assert
 	require.Error(suite.T(), berr, "should return an error")

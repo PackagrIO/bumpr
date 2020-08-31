@@ -12,5 +12,8 @@ for d in $(go list ./...); do
     OUTPUT_PATH=$(echo "$d" | sed -e "s/^github.com\/packagrio\/bumpr\///")
     echo "Generating TEST BINARY: ${OUTPUT_PATH}/test_binary_${1}"
     mkdir -p /caches/test-binaries/${OUTPUT_PATH}
-    go test -mod vendor -race -covermode=atomic -tags="static $1" -c -o=${OUTPUT_PATH}/test_binary_${1} $d
+    go test -mod vendor -race -covermode=atomic -tags="static $1" -c -o=/caches/test-binaries/${OUTPUT_PATH}/test_binary_${1} $d
+
+    # TODO: copy the testdata directory for this binary if present.
+    # parentdir="$(dirname "$dir")"
 done
