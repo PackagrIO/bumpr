@@ -7,15 +7,15 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/packagrio/bumpr/pkg/config"
 	"github.com/packagrio/bumpr/pkg/engine"
-	"github.com/packagrio/bumpr/scm"
 	"github.com/packagrio/go-common/pipeline"
+	"github.com/packagrio/go-common/scm"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"io/ioutil"
 	"path"
 	//"path/filepath"
 	"github.com/packagrio/bumpr/pkg/config/mock"
-	"github.com/packagrio/go-common/pkg/scm/mock"
+	mock_scm "github.com/packagrio/go-common/pkg/scm/mock"
 	"os"
 	"testing"
 )
@@ -85,7 +85,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_ValidateTools() {
 	require.NoError(suite.T(), berr)
 }
 
-func (suite *EngineChefTestSuite) TestEngineChef_AssembleStep() {
+func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 	//setup
 	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
@@ -106,9 +106,10 @@ func (suite *EngineChefTestSuite) TestEngineChef_AssembleStep() {
 	require.NoError(suite.T(), berr)
 
 	//assert
+	require.Equal(suite.T(), "")
 }
 
-func (suite *EngineChefTestSuite) TestEngineChef_AssembleStep_WithMinimalCookbook() {
+func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook() {
 	//setup
 	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
@@ -131,7 +132,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_AssembleStep_WithMinimalCookboo
 
 }
 
-func (suite *EngineChefTestSuite) TestEngineChef_AssembleStep_WithoutMetadata() {
+func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithoutMetadata() {
 	//setup
 	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
