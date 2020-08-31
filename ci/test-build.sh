@@ -14,12 +14,14 @@ for d in $(go list ./...); do
     mkdir -p /caches/test-binaries/${OUTPUT_PATH}
     go test -mod vendor -race -covermode=atomic -tags="static $1" -c -o=/caches/test-binaries/${OUTPUT_PATH}/test_binary_${1} $d
 
-    if [ -d "${d}/testdata" ]
+    echo "check if testdata exists for this package: '${OUTPUT_PATH}/testdata'"
+    find .
+    if [ -d "${OUTPUT_PATH}/testdata" ]
     then
       # copy the testdata directory for this binary if present.
       echo "trying to copy test data from '${d}/testdata'"
       mkdir -p /caches/test-binaries/${OUTPUT_PATH}/testdata
-      cp -r "${d}/testdata/." /caches/test-binaries/${OUTPUT_PATH}/testdata
+      cp -r "${OUTPUT_PATH}/testdata/." /caches/test-binaries/${OUTPUT_PATH}/testdata
     fi
 done
 
