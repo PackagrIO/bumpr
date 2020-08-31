@@ -50,9 +50,9 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          pwd
-          ls -alt
+
           find "$PWD" -type f
+          chmod +x .
           ./test-execute.sh ${{ matrix.package_type }}
       - name: Archive
         uses: actions/upload-artifact@v2
