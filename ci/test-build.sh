@@ -20,5 +20,7 @@ for d in $(go list ./...); do
       mkdir -p /caches/test-binaries/${OUTPUT_PATH}/testdata
       cp -r "${d}/testdata/." /caches/test-binaries/${OUTPUT_PATH}/testdata
     fi
-
 done
+
+# copy over the test-execute binary.
+cp ci/test-execute.sh /caches/test-binaries/test-execute.sh

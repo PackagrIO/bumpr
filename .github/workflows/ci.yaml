@@ -50,8 +50,10 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-
-          ./ci/test-execute.sh ${{ matrix.package_type }}
+          pwd
+          ls -alt
+          find "$PWD" -type f
+          ./test-execute.sh ${{ matrix.package_type }}
       - name: Archive
         uses: actions/upload-artifact@v2
         with:
