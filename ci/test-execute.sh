@@ -22,7 +22,7 @@ for d in $(find . -type f -name "test_binary_*"); do
     echo "Found TEST BINARY: ${d}"
         pushd $(dirname "$d")
 
-        eval "./${TEST_BINARY} -test.coverprofile=profile.out"
+        eval "./${d} -test.coverprofile=profile.out"
         if [ -f profile.out ]; then
             cat profile.out >> "/coverage/coverage-${1}.txt"
             rm profile.out
