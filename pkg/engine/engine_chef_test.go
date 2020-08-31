@@ -15,7 +15,7 @@ import (
 	"path"
 	//"path/filepath"
 	"github.com/packagrio/bumpr/pkg/config/mock"
-	mock_scm "github.com/packagrio/go-common/pkg/scm/mock"
+	mock_scm "github.com/packagrio/go-common/scm/mock"
 	"os"
 	"testing"
 )
