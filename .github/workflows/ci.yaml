@@ -6,7 +6,6 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    container: "packagrio/packagr:latest-${{ matrix.package_type }}"
     env:
       PROJECT_PATH: /go/src/github.com/packagrio/bumpr
     strategy:
@@ -30,6 +29,7 @@ jobs:
 
 
       - name: Test
+        uses: "docker://packagrio/packagr:latest-${{ matrix.package_type }}"
         env:
           GOOS: linux
           GOARCH: amd64
