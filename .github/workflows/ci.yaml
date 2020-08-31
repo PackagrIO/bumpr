@@ -50,8 +50,6 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-
-          find "$PWD" -type f
           chmod -R +x .
           ./test-execute.sh ${{ matrix.package_type }}
       - name: Archive
