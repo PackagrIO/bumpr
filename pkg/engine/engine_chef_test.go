@@ -106,7 +106,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "")
+	//require.Equal(suite.T(), "")
 }
 
 func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook() {
