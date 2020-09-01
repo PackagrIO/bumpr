@@ -108,7 +108,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 
 	//assert
 	//require.Equal(suite.T(), "")
-	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(metadata.ChefMetadata).Version)
+	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(*metadata.ChefMetadata).Version)
 
 }
 
@@ -134,7 +134,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(metadata.ChefMetadata).Version)
+	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(*metadata.ChefMetadata).Version)
 
 }
 

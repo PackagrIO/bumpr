@@ -107,7 +107,7 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(metadata.RubyMetadata).Version)
+	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(*metadata.RubyMetadata).Version)
 
 }
 
@@ -133,7 +133,7 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithMinimalGem() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(metadata.RubyMetadata).Version)
+	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(*metadata.RubyMetadata).Version)
 
 }
 

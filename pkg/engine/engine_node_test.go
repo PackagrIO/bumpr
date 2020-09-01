@@ -108,7 +108,7 @@ func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "1.0.9", nodeEngine.GetNextMetadata().(metadata.NodeMetadata).Version)
+	require.Equal(suite.T(), "1.0.9", nodeEngine.GetNextMetadata().(*metadata.NodeMetadata).Version)
 
 }
 

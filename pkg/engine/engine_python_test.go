@@ -111,7 +111,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(metadata.PythonMetadata).Version)
+	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(*metadata.PythonMetadata).Version)
 }
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo() {
@@ -137,7 +137,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(metadata.PythonMetadata).Version)
+	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(*metadata.PythonMetadata).Version)
 }
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithoutSetupPy() {

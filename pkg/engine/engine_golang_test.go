@@ -116,7 +116,7 @@ func (suite *EngineGolangTestSuite) TestEngineGolang_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "1.0.1", golangEngine.GetNextMetadata().(metadata.GolangMetadata).Version)
+	require.Equal(suite.T(), "1.0.1", golangEngine.GetNextMetadata().(*metadata.GolangMetadata).Version)
 
 }
 
@@ -146,7 +146,7 @@ func (suite *EngineGolangTestSuite) TestEngineGolang_BumpVersion_WithMinimalRepo
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.Equal(suite.T(), "1.0.1", golangEngine.GetNextMetadata().(metadata.GolangMetadata).Version)
+	require.Equal(suite.T(), "1.0.1", golangEngine.GetNextMetadata().(*metadata.GolangMetadata).Version)
 }
 
 func (suite *EngineGolangTestSuite) TestEngineGolang_BumpVersion_WithoutVersion() {
