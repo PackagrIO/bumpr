@@ -74,7 +74,7 @@ func TestEngineNode_TestSuite(t *testing.T) {
 
 func (suite *EngineNodeTestSuite) TestEngineNode_ValidateTools() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	//suite.Config.EXPECT().GetBool("engine_disable_security_check").Return(true).MinTimes(1)
 	nodeEngine, err := engine.Create(engine.PACKAGR_ENGINE_TYPE_NODE, suite.PipelineData, suite.Config, suite.Scm)
 	require.NoError(suite.T(), err)
@@ -88,7 +88,7 @@ func (suite *EngineNodeTestSuite) TestEngineNode_ValidateTools() {
 
 func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
@@ -111,7 +111,7 @@ func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump() {
 
 func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump_WithoutPackageJson() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
 	parentPath, err := ioutil.TempDir("", "")

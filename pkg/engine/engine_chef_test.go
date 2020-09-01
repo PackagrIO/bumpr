@@ -74,7 +74,7 @@ func TestEngineChef_TestSuite(t *testing.T) {
 
 func (suite *EngineChefTestSuite) TestEngineChef_ValidateTools() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	chefEngine, err := engine.Create(engine.PACKAGR_ENGINE_TYPE_CHEF, suite.PipelineData, suite.Config, suite.Scm)
 	require.NoError(suite.T(), err)
 
@@ -87,7 +87,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_ValidateTools() {
 
 func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
@@ -111,7 +111,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 
 func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
@@ -134,7 +134,7 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook
 
 func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithoutMetadata() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
 	parentPath, err := ioutil.TempDir("", "")

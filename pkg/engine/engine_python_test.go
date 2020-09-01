@@ -74,7 +74,7 @@ func TestEnginePython_TestSuite(t *testing.T) {
 
 func (suite *EnginePythonTestSuite) TestEnginePython_ValidateTools() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	//suite.Config.EXPECT().GetBool("engine_disable_lint").Return(false)
 	//suite.Config.EXPECT().GetBool("engine_disable_security_check").Return(false)
 
@@ -90,7 +90,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_ValidateTools() {
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_METADATA_PATH).Return("VERSION").MinTimes(1)
 
@@ -115,7 +115,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion() {
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_METADATA_PATH).Return("VERSION").MinTimes(1)
 
@@ -144,7 +144,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithoutSetupPy() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
 	parentPath, err := ioutil.TempDir("", "")

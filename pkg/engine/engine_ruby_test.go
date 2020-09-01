@@ -75,7 +75,7 @@ func TestEngineRuby_TestSuite(t *testing.T) {
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_ValidateTools() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	rubyEngine, err := engine.Create(engine.PACKAGR_ENGINE_TYPE_RUBY, suite.PipelineData, suite.Config, suite.Scm)
 	require.NoError(suite.T(), err)
 
@@ -88,7 +88,7 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_ValidateTools() {
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
@@ -116,7 +116,7 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion() {
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithMinimalGem() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 	suite.Config.EXPECT().GetString(config.PACKAGR_VERSION_BUMP_TYPE).Return("patch").MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
@@ -144,7 +144,7 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithMinimalGem() {
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithoutGemspec() {
 	//setup
-	suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
+	//suite.Config.EXPECT().SetDefault(gomock.Any(), gomock.Any()).MinTimes(1)
 
 	//copy cookbook fixture into a temp directory.
 	parentPath, err := ioutil.TempDir("", "")
