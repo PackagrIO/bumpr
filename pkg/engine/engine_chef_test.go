@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/packagrio/bumpr/pkg/config"
 	"github.com/packagrio/bumpr/pkg/engine"
+	"github.com/packagrio/go-common/metadata"
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"github.com/stretchr/testify/require"
@@ -107,6 +108,8 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion() {
 
 	//assert
 	//require.Equal(suite.T(), "")
+	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(metadata.ChefMetadata).Version)
+
 }
 
 func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook() {
@@ -129,6 +132,9 @@ func (suite *EngineChefTestSuite) TestEngineChef_BumpVersion_WithMinimalCookbook
 	//test
 	berr := chefEngine.BumpVersion()
 	require.NoError(suite.T(), berr)
+
+	//assert
+	require.Equal(suite.T(), "0.1.12", chefEngine.GetNextMetadata().(metadata.ChefMetadata).Version)
 
 }
 

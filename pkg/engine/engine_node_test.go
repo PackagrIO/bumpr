@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/packagrio/bumpr/pkg/config"
 	"github.com/packagrio/bumpr/pkg/engine"
+	"github.com/packagrio/go-common/metadata"
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"github.com/stretchr/testify/require"
@@ -107,6 +108,8 @@ func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump() {
 	require.NoError(suite.T(), berr)
 
 	//assert
+	require.Equal(suite.T(), "1.0.9", nodeEngine.GetNextMetadata().(metadata.NodeMetadata).Version)
+
 }
 
 func (suite *EngineNodeTestSuite) TestEngineNode_VersionBump_WithoutPackageJson() {

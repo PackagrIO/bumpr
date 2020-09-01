@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/packagrio/bumpr/pkg/config"
 	"github.com/packagrio/bumpr/pkg/engine"
+	"github.com/packagrio/go-common/metadata"
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"github.com/stretchr/testify/require"
@@ -110,7 +111,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, ".gitignore")))
+	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(metadata.PythonMetadata).Version)
 }
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo() {
@@ -136,10 +137,7 @@ func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithMinimalRepo
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "VERSION")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "tox.ini")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "tests", "__init__.py")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, ".gitignore")))
+	require.Equal(suite.T(), "1.0.7", pythonEngine.GetNextMetadata().(metadata.PythonMetadata).Version)
 }
 
 func (suite *EnginePythonTestSuite) TestEnginePython_BumpVersion_WithoutSetupPy() {

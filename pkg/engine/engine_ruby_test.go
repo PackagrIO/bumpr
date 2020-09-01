@@ -7,6 +7,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/packagrio/bumpr/pkg/config"
 	"github.com/packagrio/bumpr/pkg/engine"
+	"github.com/packagrio/go-common/metadata"
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"github.com/stretchr/testify/require"
@@ -25,15 +26,14 @@ func TestEngineRuby_Create(t *testing.T) {
 	testConfig, err := config.Create()
 	require.NoError(t, err)
 
-	testConfig.Set("scm", "github")
-	testConfig.Set("package_type", "ruby")
-	testConfig.Set("scm_github_access_token", "placeholder")
+	testConfig.Set(config.PACKAGR_SCM, "github")
+	testConfig.Set(config.PACKAGR_PACKAGE_TYPE, "ruby")
 	pipelineData := new(pipeline.Data)
 	githubScm, err := scm.Create("github", pipelineData)
 	require.NoError(t, err)
 
 	//test
-	rubyEngine, err := engine.Create("ruby", pipelineData, testConfig, githubScm)
+	rubyEngine, err := engine.Create(engine.PACKAGR_ENGINE_TYPE_RUBY, pipelineData, testConfig, githubScm)
 
 	//assert
 	require.NoError(t, err)
@@ -107,11 +107,8 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "Rakefile")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "spec")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, ".gitignore")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "Gemfile")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "gem_analogj_test-0.1.4.gem")))
+	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(metadata.RubyMetadata).Version)
+
 }
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithMinimalGem() {
@@ -136,10 +133,8 @@ func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithMinimalGem() {
 	require.NoError(suite.T(), berr)
 
 	//assert
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "Rakefile")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "spec")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, ".gitignore")))
-	require.True(suite.T(), utils.FileExists(path.Join(suite.PipelineData.GitLocalPath, "gem_analogj_test-0.1.4.gem")))
+	require.Equal(suite.T(), "0.1.4", rubyEngine.GetNextMetadata().(metadata.RubyMetadata).Version)
+
 }
 
 func (suite *EngineRubyTestSuite) TestEngineRuby_BumpVersion_WithoutGemspec() {
