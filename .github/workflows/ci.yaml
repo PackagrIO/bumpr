@@ -83,8 +83,5 @@ jobs:
           go build -ldflags "-X main.goos=linux -X main.goarch=amd64" -o packagr-bumpr-linux-amd64 -tags "static" cmd/bumpr/bumpr.go
 
           chmod +x packagr-bumpr-linux-amd64
-      - name: Archive
-        uses: actions/upload-artifact@v2
-        with:
-          name: bumpr-binary
-          path: ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
+          ./packagr-bumpr-linux-amd64 --help
+
