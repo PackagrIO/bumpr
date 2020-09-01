@@ -38,7 +38,6 @@ func TestEngineGolang_Create(t *testing.T) {
 	//assert
 	require.NoError(t, err)
 	require.NotNil(t, golangEngine)
-	require.Equal(t, "exit 0", testConfig.GetString("engine_cmd_security_check"), "should load engine defaults")
 }
 
 // Define the suite, and absorb the built-in basic suite
