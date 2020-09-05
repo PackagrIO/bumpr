@@ -7,6 +7,7 @@ import (
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"os"
+	"path/filepath"
 )
 
 type Pipeline struct {
@@ -21,11 +22,24 @@ func (p *Pipeline) Start(configData config.Interface) error {
 	p.Config = configData
 	p.Data = new(pipeline.Data)
 
+	//by default the current working directory is the local directory to execute in
+	cwdPath, _ := os.Getwd()
+	p.Data.GitLocalPath = cwdPath
+	p.Data.GitParentPath = filepath.Dir(cwdPath)
+
 	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data)
 	if err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
 	}
+	p.Scm = sourceScm
+
+	payload, err := p.Scm.RetrievePayload()
+	if err != nil {
+		return err
+	}
+	p.Data.GitHeadInfo = payload.Head
+	p.Data.GitBaseInfo = payload.Base
 
 	bumpEngine, err := engine.Create(
 		p.Config.GetString(config.PACKAGR_PACKAGE_TYPE),
@@ -46,7 +60,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 	}
 
 	//notify the SCM after the run is complete.
-	if err := p.Scm.Notify(); err != nil {
+	if err := p.Scm.SetOutput("ReleaseVersion", p.Data.ReleaseVersion); err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
 	}
