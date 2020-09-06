@@ -85,3 +85,8 @@ jobs:
           chmod +x packagr-bumpr-linux-amd64
           ./packagr-bumpr-linux-amd64 --help
 
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: bumpr-binary
+          path: packagr-bumpr-linux-amd64
