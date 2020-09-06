@@ -89,4 +89,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bumpr-binary
-          path: packagr-bumpr-linux-amd64
+          path: ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
