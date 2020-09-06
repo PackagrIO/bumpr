@@ -1,7 +1,10 @@
 
 # Inputs
-- package_type
-- scm
-- version_bump_type
-- version_metadata_path
-- generic_version_template
+- `package_type`
+- `scm`
+- `version_bump_type`
+- `version_metadata_path`
+- `generic_version_template`
+
+# Outputs
+- `release_version`

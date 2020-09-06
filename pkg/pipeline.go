@@ -60,7 +60,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 	}
 
 	//notify the SCM after the run is complete.
-	if err := p.Scm.SetOutput("ReleaseVersion", p.Data.ReleaseVersion); err != nil {
+	if err := p.Scm.SetOutput("release_version", p.Data.ReleaseVersion); err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
 	}
