@@ -70,11 +70,11 @@ jobs:
 
           # The message for the commit
           # Default: 'Commit from GitHub Actions'
-          message: '(${{steps.bump_version.outputs.ReleaseVersion}}) Automated packaging of release by Packagr'
+          message: '(${{steps.bump_version.outputs.release_version}}) Automated packaging of release by Packagr'
 
           # Name of the tag to add to the new commit (see the paragraph below for more info)
           # Default: ''
-          tag: ${{steps.bump_version.outputs.ReleaseVersion}}
+          tag: ${{steps.bump_version.outputs.release_version}}
 
         env:
           # This is necessary in order to push a commit to the repo
@@ -86,8 +86,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.bump_version.outputs.ReleaseVersion }}
-          release_name: Release ${{ steps.bump_version.outputs.ReleaseVersion }}
+          tag_name: ${{ steps.bump_version.outputs.release_version }}
+          release_name: Release ${{ steps.bump_version.outputs.release_version }}
           draft: false
           prerelease: false
       - name: Upload Release Asset
