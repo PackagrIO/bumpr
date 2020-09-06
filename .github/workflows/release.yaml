@@ -17,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Bump version
-        uses: packagrio/action-bumpr-go@v0.0.5
+        uses: packagrio/action-bumpr-go@v0.0.6
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
