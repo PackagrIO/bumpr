@@ -26,11 +26,9 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          echo "WORKSPACE"
-          ls -alt
 
           mkdir -p $PROJECT_PATH
-          cp -a $GITHUB_WORKSPACE/* $PROJECT_PATH/
+          cp -a $GITHUB_WORKSPACE/. $PROJECT_PATH/
           cd $PROJECT_PATH
 
           echo "PROJECT_PATH"
