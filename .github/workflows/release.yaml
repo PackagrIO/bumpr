@@ -2,10 +2,11 @@ name: Release
 # This workflow is triggered manually
 on:
   workflow_dispatch:
-    versionBumpType:
-      description: 'Version Bump Type (major, minor, patch)'
-      required: true
-      default: 'patch'
+    inputs:
+      versionBumpType:
+        description: 'Version Bump Type (major, minor, patch)'
+        required: true
+        default: 'patch'
 jobs:
   build:
     name: Build
