@@ -3,7 +3,7 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      versionBumpType:
+      version_bump_type:
         description: 'Version Bump Type (major, minor, patch)'
         required: true
         default: 'patch'
@@ -21,6 +21,7 @@ jobs:
         id: bump_version
         uses: packagrio/action-bumpr-go@master
         with:
+          version_bump_type: ${{ github.event.inputs.version_bump_type }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: Build
         env:
