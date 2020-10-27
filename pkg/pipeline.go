@@ -64,6 +64,6 @@ func (p *Pipeline) Start(configData config.Interface) error {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
 	}
-
+	fmt.Printf("version bumped to %s", p.Data.ReleaseVersion)
 	return nil
 }

@@ -33,9 +33,6 @@ jobs:
           cp -a $GITHUB_WORKSPACE/. $PROJECT_PATH/
           cd $PROJECT_PATH
 
-          echo "PROJECT_PATH"
-          ls -alt
-
           go mod vendor
 
           go test -v -tags "static" $(go list ./... | grep -v /vendor/)

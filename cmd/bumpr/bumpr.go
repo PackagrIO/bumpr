@@ -37,10 +37,10 @@ func main() {
 
 			fmt.Fprintf(c.App.Writer, fmt.Sprintf(utils.StripIndent(
 				`
-			  ___   __   ____  ____  _  _  __    ____  ___  ____
-			 / __) / _\ (  _ \/ ___)/ )( \(  )  (  __)/ __)(    \
-			( (__ /    \ ) __/\___ \) \/ (/ (_/\ ) _)( (__  ) D (
-			 \___)\_/\_/(__)  (____/\____/\____/(____)\___)(____/
+			 ____   __    ___  __ _   __    ___  ____ 
+			(  _ \ / _\  / __)(  / ) / _\  / __)(  _ \
+			 ) __//    \( (__  )  ( /    \( (_ \ )   /
+			(__)  \_/\_/ \___)(__\_)\_/\_/ \___/(__\_)
 			%s
 
 			`), subtitle))
@@ -60,6 +60,7 @@ func main() {
 
 					fmt.Println("package type:", configuration.GetString(config.PACKAGR_PACKAGE_TYPE))
 					fmt.Println("scm:", configuration.GetString(config.PACKAGR_SCM))
+					fmt.Println("bump type:", configuration.GetString(config.PACKAGR_VERSION_BUMP_TYPE))
 
 					pipeline := pkg.Pipeline{}
 					err := pipeline.Start(configuration)
