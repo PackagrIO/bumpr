@@ -11,7 +11,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    container: golang:1.13
+    container: analogj/capsulecd-build
     env:
       PROJECT_PATH: /go/src/github.com/packagrio/bumpr
     steps:
@@ -34,14 +34,16 @@ jobs:
           cd $PROJECT_PATH
 
           go mod vendor
+          mkdir -p vendor/gopkg.in/libgit2/git2go.v25/vendor/libgit2/build/
+          cp /usr/local/linux/lib/pkgconfig/libgit2.pc vendor/gopkg.in/libgit2/git2go.v25/vendor/libgit2/build/libgit2.pc
 
-          go test -v -tags "static" $(go list ./... | grep -v /vendor/)
-
-          go build -ldflags "-X main.goos=linux -X main.goarch=amd64" -o packagr-bumpr-linux-amd64 -tags "static" cmd/bumpr/bumpr.go
+          go test -mod vendor -v -tags "static" $(go list ./... | grep -v /vendor/)
+          # build linux binary
+          . /scripts/toolchains/linux/linux-build-env.sh && go build -mod vendor -ldflags "-X main.goos=linux -X main.goarch=amd64" -o packagr-bumpr-linux-amd64 -tags "static" cmd/bumpr/bumpr.go
 
           chmod +x packagr-bumpr-linux-amd64
           ./packagr-bumpr-linux-amd64 --help
-
+          echo "listing linked libraries" && ldd packagr-bumpr-linux-amd64
       - name: Commit
         uses: EndBug/add-and-commit@v4 # You can change this to use a specific version
         with:
