@@ -27,7 +27,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 	p.Data.GitLocalPath = cwdPath
 	p.Data.GitParentPath = filepath.Dir(cwdPath)
 
-	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data)
+	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, nil)
 	if err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
