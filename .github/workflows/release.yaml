@@ -15,6 +15,10 @@ jobs:
     env:
       PROJECT_PATH: /go/src/github.com/packagrio/bumpr
     steps:
+      - name: Obtain Latest Git ONLY within container for checkout
+        run: |
+          apt-get update
+          apt-get install -y git
       - name: Checkout
         uses: actions/checkout@v2
         with:
