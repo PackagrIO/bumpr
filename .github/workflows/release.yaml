@@ -48,8 +48,6 @@ jobs:
           echo "listing linked libraries" && ldd packagr-bumpr-linux-amd64
 
           # restore modified dir to GH workspace.
-          rm -rf $GITHUB_WORKSPACE/*
-          rm -rf $GITHUB_WORKSPACE/.git
           cp -arf $PROJECT_PATH/. $GITHUB_WORKSPACE/
 
       - name: Commit Changes
