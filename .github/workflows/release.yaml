@@ -52,6 +52,7 @@ jobs:
         env:
           # This is necessary in order to push a commit to the repo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+          cwd: $${{ env.PROJECT_PATH }}
       - name: Publish Release
         id: publish
         uses: packagrio/action-publishr-go@master
@@ -60,6 +61,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
         with:
           upload_assets: 'packagr-bumpr-linux-amd64'
+          cwd: $${{ env.PROJECT_PATH }}
 
 #      - name: Create Release
 #        id: create_release
