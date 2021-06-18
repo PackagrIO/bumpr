@@ -23,6 +23,9 @@ cat pkg/version/version.go
 # const VERSION = "0.0.4"
 ```
 
+# Documentation
+Full documentation is available at [PackagrIO/docs](https://github.com/PackagrIO/docs)
+
 # Inputs
 - `package_type`
 - `scm`
