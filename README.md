@@ -7,6 +7,20 @@
 </p>
 
 
+# Usage
+
+```
+cd /path/to/git/repo
+cat pkg/version/version.go
+# const VERSION = "0.0.3"
+
+# export PACKAGR_PACKAGE_TYPE=[major/minor/patch]
+packagr-bumpr start --scm github --package_type golang
+
+cat pkg/version/version.go
+# const VERSION = "0.0.4"
+```
+
 # Inputs
 - `package_type`
 - `scm`
