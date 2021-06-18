@@ -67,7 +67,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
         with:
           upload_assets: 'packagr-bumpr-linux-amd64'
-          cwd: ${{ env.PROJECT_PATH }}
+#          cwd: ${{ env.PROJECT_PATH }}
 
 #      - name: Create Release
 #        id: create_release
