@@ -6,6 +6,8 @@
   </a>
 </p>
 
+Language agnostic tool to bump version files using SemVer. 
+
 
 # Usage
 
