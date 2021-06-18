@@ -8,6 +8,9 @@
 
 Language agnostic tool to bump version files using SemVer. 
 
+# Documentation
+Full documentation is available at [PackagrIO/docs](https://github.com/PackagrIO/docs)
+
 
 # Usage
 
@@ -22,9 +25,6 @@ packagr-bumpr start --scm github --package_type golang
 cat pkg/version/version.go
 # const VERSION = "0.0.4"
 ```
-
-# Documentation
-Full documentation is available at [PackagrIO/docs](https://github.com/PackagrIO/docs)
 
 # Inputs
 - `package_type`
