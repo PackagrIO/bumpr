@@ -46,14 +46,19 @@ jobs:
           chmod +x packagr-bumpr-linux-amd64
           ./packagr-bumpr-linux-amd64 --help
           echo "listing linked libraries" && ldd packagr-bumpr-linux-amd64
+
+          # restore modified dir to GH workspace.
+          rm -rf $GITHUB_WORKSPACE/.*
+          cp -a $PROJECT_PATH/. $GITHUB_WORKSPACE/
+
       - name: Commit Changes
         id: commit
         uses: packagrio/action-releasr-go@master
         env:
           # This is necessary in order to push a commit to the repo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
-        with:
-          cwd: ${{ env.PROJECT_PATH }}
+#        with:
+#          cwd: ${{ env.PROJECT_PATH }}
       - name: Publish Release
         id: publish
         uses: packagrio/action-publishr-go@master
