@@ -35,7 +35,7 @@ jobs:
           ls -alt
           cat ${GITHUB_EVENT_PATH}
           env
-          echo "${GITHUB_SHA}"
+          git log --all --decorate --oneline --graph
 
 
           mkdir -p $PROJECT_PATH
