@@ -31,6 +31,8 @@ jobs:
           GOARCH: amd64
         run: |
           ls -alt
+          cat ${GITHUB_EVENT_PATH}
+
 
           mkdir -p $PROJECT_PATH
           cp -a $GITHUB_WORKSPACE/. $PROJECT_PATH/
