@@ -11,7 +11,7 @@ require (
 	github.com/google/go-github v17.0.0+incompatible // indirect
 	github.com/k0kubun/pp v3.0.1+incompatible // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
-	github.com/packagrio/go-common v0.0.2
+	github.com/packagrio/go-common v0.0.5
 	github.com/seborama/govcr v4.5.0+incompatible // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/stretchr/testify v1.6.1
