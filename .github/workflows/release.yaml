@@ -32,12 +32,6 @@ jobs:
           GOOS: linux
           GOARCH: amd64
         run: |
-          ls -alt
-          cat ${GITHUB_EVENT_PATH}
-          env
-          git log --all --decorate --oneline --graph
-
-
           mkdir -p $PROJECT_PATH
           cp -a $GITHUB_WORKSPACE/. $PROJECT_PATH/
           cd $PROJECT_PATH
@@ -56,7 +50,6 @@ jobs:
 
           # restore modified dir to GH workspace.
           cp -arf $PROJECT_PATH/. $GITHUB_WORKSPACE/
-
       - name: Commit Changes
         id: commit
         uses: packagrio/action-releasr-go@master
@@ -71,24 +64,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
         with:
           upload_assets: 'packagr-bumpr-linux-amd64'
-
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ steps.bump_version.outputs.release_version }}
-#          release_name: Release ${{ steps.bump_version.outputs.release_version }}
-#          draft: false
-#          prerelease: false
-#      - name: Upload Release Asset
-#        id: upload-release-asset
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-#          asset_path: ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
-#          asset_name: packagr-bumpr-linux-amd64
-#          asset_content_type: application/octet-stream
