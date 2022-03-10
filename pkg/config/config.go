@@ -68,8 +68,5 @@ func (c *configuration) ReadConfig(configFilePath string) error {
 		log.Printf("Error merging config file: %s", err)
 		return err
 	}
-	log.Println("[new] package type:", c.GetString(PACKAGR_PACKAGE_TYPE))
-	log.Println("[new] scm:", c.GetString(PACKAGR_SCM))
-	log.Println("[new] bump type:", c.GetString(PACKAGR_VERSION_BUMP_TYPE))
 	return nil
 }

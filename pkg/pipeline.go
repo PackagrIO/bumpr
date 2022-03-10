@@ -26,15 +26,15 @@ func (p *Pipeline) Start(configData config.Interface) error {
 	p.Config = configData
 	p.Data = new(pipeline.Data)
 
-	//Parse Repo config if present.
-	if err := p.ParseRepoConfig(); err != nil {
-		return err
-	}
-
 	//by default the current working directory is the local directory to execute in
 	cwdPath, _ := os.Getwd()
 	p.Data.GitLocalPath = cwdPath
 	p.Data.GitParentPath = filepath.Dir(cwdPath)
+
+	//Parse Repo config if present.
+	if err := p.ParseRepoConfig(); err != nil {
+		return err
+	}
 
 	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, nil)
 	if err != nil {

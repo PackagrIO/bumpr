@@ -54,8 +54,13 @@ func main() {
 				Action: func(c *cli.Context) error {
 
 					configuration, _ := config.Create()
-					configuration.Set(config.PACKAGR_SCM, c.String("scm"))
-					configuration.Set(config.PACKAGR_PACKAGE_TYPE, c.String("package_type"))
+					if c.IsSet("scm") {
+						configuration.Set(config.PACKAGR_SCM, c.String("scm"))
+					}
+					if c.IsSet("package_type") {
+						configuration.Set(config.PACKAGR_PACKAGE_TYPE, c.String("package_type"))
+					}
+
 					//config.Set("dry_run", c.String("dry_run"))
 
 					fmt.Println("package type:", configuration.GetString(config.PACKAGR_PACKAGE_TYPE))
