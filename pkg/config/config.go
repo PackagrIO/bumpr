@@ -1,7 +1,12 @@
 package config
 
 import (
+	stderrors "errors"
+	"fmt"
+	"github.com/analogj/go-util/utils"
 	"github.com/spf13/viper"
+	"log"
+	"os"
 )
 
 // When initializing this class the following methods must be called:
@@ -26,6 +31,7 @@ func (c *configuration) Init() error {
 	c.SetDefault(PACKAGR_PACKAGE_TYPE, "generic")
 	c.SetDefault(PACKAGR_SCM, "default")
 	c.SetDefault(PACKAGR_VERSION_BUMP_TYPE, "patch")
+	c.SetDefault(PACKAGR_ENGINE_REPO_CONFIG_PATH, "packagr.yml")
 
 	//set the default system config file search path.
 	//if you want to load a non-standard location system config file (~/capsule.yml), use ReadConfig
@@ -39,5 +45,28 @@ func (c *configuration) Init() error {
 	c.AutomaticEnv()
 	//CLI options will be added via the `Set()` function
 
+	return nil
+}
+
+func (c *configuration) ReadConfig(configFilePath string) error {
+
+	if !utils.FileExists(configFilePath) {
+		message := fmt.Sprintf("The configuration file (%s) could not be found. Skipping", configFilePath)
+		log.Printf(message)
+		return stderrors.New(message)
+	}
+
+	log.Printf("Loading configuration file: %s", configFilePath)
+
+	config_data, err := os.Open(configFilePath)
+	if err != nil {
+		log.Printf("Error reading configuration file: %s", err)
+		return err
+	}
+	err = c.MergeConfig(config_data)
+	if err != nil {
+		log.Printf("Error merging config file: %s", err)
+		return err
+	}
 	return nil
 }
