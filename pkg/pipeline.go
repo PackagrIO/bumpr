@@ -9,6 +9,7 @@ import (
 	"github.com/packagrio/go-common/pipeline"
 	"github.com/packagrio/go-common/scm"
 	"log"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
@@ -36,7 +37,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 		return err
 	}
 
-	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, nil)
+	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, &http.Client{})
 	if err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
