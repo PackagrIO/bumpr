@@ -10,7 +10,6 @@ import (
 )
 
 func TestConfiguration_init_ShouldCorrectlyInitializeConfiguration(t *testing.T) {
-	t.Parallel()
 
 	//setup
 	defer utils.UnsetEnv("PACKAGR_")()
@@ -40,6 +39,7 @@ func TestConfiguration_init_EnvVariablesShouldLoadProperly(t *testing.T) {
 
 func TestConfiguration_ReadConfig(t *testing.T) {
 	//setup
+	defer utils.UnsetEnv("PACKAGR_")()
 	testConfig, _ := config.Create()
 	testConfig.SetDefault(config.PACKAGR_PACKAGE_TYPE, "generic")
 	testConfig.SetDefault(config.PACKAGR_SCM, "default")
