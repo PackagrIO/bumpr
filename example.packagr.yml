@@ -1,0 +1,4 @@
+package_type: generic
+scm: default
+version_bump_type: patch
+engine_repo_config_path: packagr.yml
