@@ -37,7 +37,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 		return err
 	}
 
-	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, &http.Client{})
+	sourceScm, err := scm.Create(p.Config.GetString(config.PACKAGR_SCM), p.Data, p.Config, nil)
 	if err != nil {
 		fmt.Printf("FATAL: %+v\n", err)
 		os.Exit(1)
