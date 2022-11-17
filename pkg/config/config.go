@@ -32,7 +32,7 @@ func (c *configuration) Init() error {
 	c.SetDefault(PACKAGR_SCM, "default")
 	c.SetDefault(PACKAGR_VERSION_BUMP_TYPE, "patch")
 	c.SetDefault(PACKAGR_ENGINE_REPO_CONFIG_PATH, "packagr.yml")
-	c.SetDefault(PACKAGR_ADDL_VERSION_METADATA_PATHS, map[string]string{})
+	c.SetDefault(PACKAGR_ADDL_VERSION_METADATA_PATHS, map[string]interface{}{})
 
 	//set the default system config file search path.
 	//if you want to load a non-standard location system config file (~/capsule.yml), use ReadConfig
