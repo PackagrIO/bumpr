@@ -74,6 +74,6 @@ func TestConfiguration_ReadConfig_AddlVersionMetadataPaths(t *testing.T) {
 	require.Equal(t, "golang", testConfig.GetString(config.PACKAGR_PACKAGE_TYPE), "should populate Package Type from overrides config file")
 	require.Equal(t, "github", testConfig.GetString(config.PACKAGR_SCM), "should populate SCM from overrides config file")
 	require.Equal(t, "major", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate Engine Version Bump Type from overrides config file")
-	require.Equal(t, "addl_version_metadata_paths", testConfig.GetStringMap(config.PACKAGR_ADDL_VERSION_METADATA_PATHS), "should populate addl metadata paths from config file")
+	require.Equal(t, map[string]interface{}{"node": []interface{}{"package.json"}}, testConfig.GetStringMap(config.PACKAGR_ADDL_VERSION_METADATA_PATHS), "should populate addl metadata paths from config file")
 
 }
