@@ -79,11 +79,15 @@ func (g *enginePython) BumpVersion() error {
 		return perr
 	}
 
-	if nerr := g.writeNextMetadata(g.PipelineData.GitLocalPath); nerr != nil {
+	if nerr := g.SetVersion(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), g.NextMetadata.Version); nerr != nil {
 		return nerr
 	}
 
 	return nil
+}
+
+func (g *enginePython) SetVersion(versionMetadataPath string, nextVersion string) error {
+	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
 //private Helpers
@@ -110,6 +114,6 @@ func (g *enginePython) populateNextMetadata() error {
 	return nil
 }
 
-func (g *enginePython) writeNextMetadata(gitLocalPath string) error {
-	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), []byte(g.NextMetadata.Version), 0644)
+func (g *enginePython) writeNextMetadata(gitLocalMetadataPath string, nextVersion string) error {
+	return ioutil.WriteFile(gitLocalMetadataPath, []byte(nextVersion), 0644)
 }

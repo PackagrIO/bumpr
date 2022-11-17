@@ -1,0 +1,6 @@
+package_type: 'golang'
+scm: 'github'
+version_bump_type: 'major'
+addl_version_metadata_paths:
+  node:
+    - 'package.json'

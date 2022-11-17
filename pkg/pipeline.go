@@ -69,6 +69,25 @@ func (p *Pipeline) Start(configData config.Interface) error {
 		os.Exit(1)
 	}
 
+	//find addl version files to bump
+	for engineType, paths := range p.Config.GetStringMap(config.PACKAGR_ADDL_VERSION_METADATA_PATHS) {
+		//process additional paths, setting version to bumped version
+
+		addlMetadataEngine, err := engine.Create(engineType, p.Data, p.Config, sourceScm)
+		if err != nil {
+			fmt.Printf("FATAL: %+v\n", err)
+			os.Exit(1)
+		}
+		for _, metadataPath := range paths.([]string) {
+			err = addlMetadataEngine.SetVersion(metadataPath, p.Data.ReleaseVersion)
+			if err != nil {
+				fmt.Printf("FATAL: %+v\n", err)
+				os.Exit(1)
+			}
+		}
+
+	}
+
 	//notify the SCM after the run is complete.
 	if err := p.Scm.SetOutput("release_version", p.Data.ReleaseVersion); err != nil {
 		fmt.Printf("FATAL: %+v\n", err)

@@ -15,6 +15,7 @@ type Interface interface {
 	ValidateTools() error
 
 	BumpVersion() error
+	SetVersion(versionMetadataPath string, nextVersion string) error
 
 	GetCurrentMetadata() interface{}
 	GetNextMetadata() interface{}

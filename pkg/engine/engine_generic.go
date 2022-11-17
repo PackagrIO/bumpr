@@ -62,11 +62,15 @@ func (g *engineGeneric) BumpVersion() error {
 		return perr
 	}
 
-	if nerr := g.writeNextMetadata(g.PipelineData.GitLocalPath); nerr != nil {
+	if nerr := g.SetVersion(path.Join(g.PipelineData.GitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), g.NextMetadata.Version); nerr != nil {
 		return nerr
 	}
 
 	return nil
+}
+
+func (g *engineGeneric) SetVersion(versionMetadataPath string, nextVersion string) error {
+	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
 //Helpers
@@ -99,9 +103,9 @@ func (g *engineGeneric) populateNextMetadata() error {
 	return nil
 }
 
-func (g *engineGeneric) writeNextMetadata(gitLocalPath string) error {
+func (g *engineGeneric) writeNextMetadata(gitLocalMetadataPath string, nextVersion string) error {
 
-	v, nerr := semver.NewVersion(g.NextMetadata.Version)
+	v, nerr := semver.NewVersion(nextVersion)
 	if nerr != nil {
 		return nerr
 	}
@@ -109,5 +113,5 @@ func (g *engineGeneric) writeNextMetadata(gitLocalPath string) error {
 	template := g.Config.GetString(config.PACKAGR_GENERIC_VERSION_TEMPLATE)
 	versionContent := fmt.Sprintf(template, v.Major(), v.Minor(), v.Patch())
 
-	return ioutil.WriteFile(path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH)), []byte(versionContent), 0644)
+	return ioutil.WriteFile(gitLocalMetadataPath, []byte(versionContent), 0644)
 }

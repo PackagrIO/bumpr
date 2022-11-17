@@ -59,11 +59,15 @@ func (g *engineNode) BumpVersion() error {
 		return perr
 	}
 
-	if nerr := g.writeNextMetadata(g.PipelineData.GitLocalPath); nerr != nil {
+	if nerr := g.SetVersion(g.PipelineData.GitLocalPath, g.NextMetadata.Version); nerr != nil {
 		return nerr
 	}
 
 	return nil
+}
+
+func (g *engineNode) SetVersion(versionMetadataPath string, nextVersion string) error {
+	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
 //private Helpers
@@ -95,13 +99,11 @@ func (g *engineNode) populateNextMetadata() error {
 	return nil
 }
 
-func (g *engineNode) writeNextMetadata(gitLocalPath string) error {
+func (g *engineNode) writeNextMetadata(gitLocalPath string, nextVersion string) error {
 	// The version will be bumped up via the npm version command.
 	// --no-git-tag-version ensures that we dont create a git commit (which npm will do by default).
-	versionCmd := fmt.Sprintf("npm --no-git-tag-version version %s",
-		g.NextMetadata.Version,
-	)
-	if verr := utils.BashCmdExec(versionCmd, g.PipelineData.GitLocalPath, nil, ""); verr != nil {
+	versionCmd := fmt.Sprintf("npm --no-git-tag-version version %s", nextVersion)
+	if verr := utils.BashCmdExec(versionCmd, gitLocalPath, nil, ""); verr != nil {
 		return errors.EngineTestRunnerError("npm version bump failed")
 	}
 	return nil
