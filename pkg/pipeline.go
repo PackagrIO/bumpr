@@ -79,7 +79,7 @@ func (p *Pipeline) Start(configData config.Interface) error {
 			os.Exit(1)
 		}
 		for _, metadataPath := range paths.([]string) {
-			err = addlMetadataEngine.SetVersion(metadataPath, p.Data.ReleaseVersion)
+			err = addlMetadataEngine.SetVersion(path.Join(p.Data.GitLocalPath, metadataPath), p.Data.ReleaseVersion)
 			if err != nil {
 				fmt.Printf("FATAL: %+v\n", err)
 				os.Exit(1)
