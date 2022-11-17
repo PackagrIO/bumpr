@@ -12,6 +12,7 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/urfave/cli v1.22.4
 	golang.org/x/oauth2 v0.0.0-20200107190931-bf48bf16ab8d // indirect
+	golang.org/x/sys v0.2.0 // indirect
 	gopkg.in/yaml.v2 v2.3.0
 )
 

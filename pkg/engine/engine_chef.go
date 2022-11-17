@@ -63,11 +63,15 @@ func (g *engineChef) BumpVersion() error {
 		return perr
 	}
 
-	if nerr := g.writeNextMetadata(g.PipelineData.GitLocalPath); nerr != nil {
+	if nerr := g.SetVersion(g.PipelineData.GitLocalPath, g.NextMetadata.Version); nerr != nil {
 		return nerr
 	}
 
 	return nil
+}
+
+func (g *engineChef) SetVersion(versionMetadataPath string, nextVersion string) error {
+	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
 //private Helpers
@@ -106,6 +110,6 @@ func (g *engineChef) populateNextMetadata() error {
 	return nil
 }
 
-func (g *engineChef) writeNextMetadata(gitLocalPath string) error {
-	return utils.BashCmdExec(fmt.Sprintf("knife spork bump %s manual %s -o ../", path.Base(gitLocalPath), g.NextMetadata.Version), gitLocalPath, nil, "")
+func (g *engineChef) writeNextMetadata(gitLocalPath string, nextVersion string) error {
+	return utils.BashCmdExec(fmt.Sprintf("knife spork bump %s manual %s -o ../", path.Base(gitLocalPath), nextVersion), gitLocalPath, nil, "")
 }

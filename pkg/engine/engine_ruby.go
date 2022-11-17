@@ -81,11 +81,15 @@ func (g *engineRuby) BumpVersion() error {
 		return perr
 	}
 
-	if nerr := g.writeNextMetadata(g.PipelineData.GitLocalPath); nerr != nil {
+	if nerr := g.SetVersion(path.Join(g.PipelineData.GitLocalPath, "lib", g.CurrentMetadata.Name, "version.rb"), g.NextMetadata.Version); nerr != nil {
 		return nerr
 	}
 
 	return nil
+}
+
+func (g *engineRuby) SetVersion(versionMetadataPath string, nextVersion string) error {
+	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
 //private Helpers
@@ -150,14 +154,14 @@ func (g *engineRuby) populateNextMetadata() error {
 	return nil
 }
 
-func (g *engineRuby) writeNextMetadata(gitLocalPath string) error {
+func (g *engineRuby) writeNextMetadata(gitLocalMetadataPath string, nextVersion string) error {
 
-	versionrbPath := path.Join(g.PipelineData.GitLocalPath, "lib", g.CurrentMetadata.Name, "version.rb")
+	versionrbPath := gitLocalMetadataPath
 	versionrbContent, rerr := ioutil.ReadFile(versionrbPath)
 	if rerr != nil {
 		return rerr
 	}
 	re := regexp.MustCompile(`(\d+)\.(\d+)\.(\d+)`)
-	updatedContent := re.ReplaceAllLiteralString(string(versionrbContent), g.NextMetadata.Version)
+	updatedContent := re.ReplaceAllLiteralString(string(versionrbContent), nextVersion)
 	return ioutil.WriteFile(versionrbPath, []byte(updatedContent), 0644)
 }

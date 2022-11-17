@@ -32,6 +32,7 @@ cat pkg/version/version.go
 - `version_bump_type`
 - `version_metadata_path`
 - `generic_version_template`
+- `addl_version_metadata_paths`
 
 # Outputs
 - `release_version`

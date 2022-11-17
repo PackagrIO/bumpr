@@ -21,6 +21,8 @@ func TestConfiguration_init_ShouldCorrectlyInitializeConfiguration(t *testing.T)
 	require.Equal(t, "generic", testConfig.GetString(config.PACKAGR_PACKAGE_TYPE), "should populate package_type with generic default")
 	require.Equal(t, "default", testConfig.GetString(config.PACKAGR_SCM), "should populate scm with default")
 	require.Equal(t, "patch", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate runner with default")
+	require.Equal(t, map[string]interface{}{}, testConfig.GetStringMap(config.PACKAGR_ADDL_VERSION_METADATA_PATHS), "should populate addl metadata paths from config file")
+
 }
 
 func TestConfiguration_init_EnvVariablesShouldLoadProperly(t *testing.T) {
@@ -53,5 +55,25 @@ func TestConfiguration_ReadConfig(t *testing.T) {
 	require.Equal(t, "golang", testConfig.GetString(config.PACKAGR_PACKAGE_TYPE), "should populate Package Type from overrides config file")
 	require.Equal(t, "github", testConfig.GetString(config.PACKAGR_SCM), "should populate SCM from overrides config file")
 	require.Equal(t, "major", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate Engine Version Bump Type from overrides config file")
+
+}
+
+func TestConfiguration_ReadConfig_AddlVersionMetadataPaths(t *testing.T) {
+	//setup
+	defer utils.UnsetEnv("PACKAGR_")()
+	testConfig, _ := config.Create()
+	testConfig.SetDefault(config.PACKAGR_PACKAGE_TYPE, "generic")
+	testConfig.SetDefault(config.PACKAGR_SCM, "default")
+	testConfig.SetDefault(config.PACKAGR_VERSION_BUMP_TYPE, "patch")
+
+	//test
+	err := testConfig.ReadConfig(path.Join("testdata", "addl_version_metadata_paths.yml"))
+
+	//assert
+	require.NoErrorf(t, err, "No error")
+	require.Equal(t, "golang", testConfig.GetString(config.PACKAGR_PACKAGE_TYPE), "should populate Package Type from overrides config file")
+	require.Equal(t, "github", testConfig.GetString(config.PACKAGR_SCM), "should populate SCM from overrides config file")
+	require.Equal(t, "major", testConfig.GetString(config.PACKAGR_VERSION_BUMP_TYPE), "should populate Engine Version Bump Type from overrides config file")
+	require.Equal(t, "addl_version_metadata_paths", testConfig.GetStringMap(config.PACKAGR_ADDL_VERSION_METADATA_PATHS), "should populate addl metadata paths from config file")
 
 }
