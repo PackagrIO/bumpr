@@ -3,7 +3,7 @@ ARG base_image
 FROM $base_image as builder
 WORKDIR /go/src/github.com/packagrio/bumpr
 COPY . .
-RUN go mod vendor && go build -o /go/bin/bumpr cmd/bumpr/bumpr.go
+RUN go mod vendor && go build -o /go/bin/packagr-bumpr cmd/bumpr/bumpr.go
 
 ##################################################
 ##
@@ -33,7 +33,7 @@ ENV PATH="/srv/packagr:${PATH}" \
 	LANGUAGE=en_US.UTF-8 \
 	LC_ALL=en_US.UTF-8
 
-COPY --from=builder /go/bin/bumpr .
+COPY --from=builder /go/bin/packagr-bumpr .
 
 
-CMD "bumpr"
+CMD "packagr-bumpr"
