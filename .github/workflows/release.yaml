@@ -21,7 +21,7 @@ jobs:
           fetch-depth: 0
       - name: Bump version
         id: bump_version
-        uses: packagrio/action-bumpr-go@master
+        uses: packagrio/action-bumpr-go@dogfood
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -54,13 +54,13 @@ jobs:
           cp -arf $PROJECT_PATH/. $GITHUB_WORKSPACE/
       - name: Commit Changes
         id: commit
-        uses: packagrio/action-releasr-go@master
+        uses: packagrio/action-releasr-go@dogfood
         env:
           # This is necessary in order to push a commit to the repo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
       - name: Publish Release
         id: publish
-        uses: packagrio/action-publishr-go@master
+        uses: packagrio/action-publishr-go@dogfood
         env:
           # This is necessary in order to push a commit to the repo
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
