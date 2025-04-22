@@ -96,7 +96,7 @@ jobs:
           name: bumpr-linux-binary
           path: ${{ env.PROJECT_PATH }}/packagr-bumpr-linux-amd64
       - name: Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: bumpr-mac-binary
           path: ${{ env.PROJECT_PATH }}/packagr-bumpr-darwin-amd64
