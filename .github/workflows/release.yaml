@@ -16,7 +16,7 @@ jobs:
       PROJECT_PATH: /go/src/github.com/packagrio/bumpr
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Bump version
