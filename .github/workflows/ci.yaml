@@ -43,13 +43,13 @@ jobs:
           - name: chef
             image_tag: latest-chef
           - name: golang
-            image_tag: golang-latest
+            image_tag: latest-golang
           - name: node
-            image_tag: node-latest
+            image_tag: latest-node
           - name: python
-            image_tag: python-latest
+            image_tag: latest-python
           - name: ruby
-            image_tag: ruby_latest
+            image_tag: latest-ruby
           - name: generic
             image_tag: latest-ubuntu
       fail-fast: false
