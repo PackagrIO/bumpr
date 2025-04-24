@@ -74,11 +74,11 @@ func (g *engineGeneric) SetVersion(versionMetadataPath string, nextVersion strin
 	return g.writeNextMetadata(versionMetadataPath, nextVersion)
 }
 
-//Helpers
+// Helpers
 func (g *engineGeneric) retrieveCurrentMetadata(gitLocalPath string) error {
 	//read VERSION file.
 	filePath := path.Join(gitLocalPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))
-	template := g.Config.GetString("generic_version_template")
+	template := g.Config.GetString(config.PACKAGR_GENERIC_VERSION_TEMPLATE)
 
 	// Handle if the user wants to merge the version file and not overwrite it
 	if g.Config.GetBool(config.PACKAGR_GENERIC_MERGE_VERSION_FILE) {
@@ -160,10 +160,8 @@ func (g *engineGeneric) writeNextMetadata(gitLocalMetadataPath string, nextVersi
 
 	template := g.Config.GetString(config.PACKAGR_GENERIC_VERSION_TEMPLATE)
 	versionContent := fmt.Sprintf(template, v.Major(), v.Minor(), v.Patch())
-	filePath := path.Join(gitLocalMetadataPath, g.Config.GetString(config.PACKAGR_VERSION_METADATA_PATH))
-
 	if g.Config.GetBool(config.PACKAGR_GENERIC_MERGE_VERSION_FILE) {
-		completeVersionContent, err := os.ReadFile(filePath)
+		completeVersionContent, err := os.ReadFile(gitLocalMetadataPath)
 		if err == nil {
 			oldVersion, err := semver.NewVersion(g.CurrentMetadata.Version)
 			if err != nil {
@@ -172,9 +170,9 @@ func (g *engineGeneric) writeNextMetadata(gitLocalMetadataPath string, nextVersi
 			oldVersionContent := fmt.Sprintf(template, oldVersion.Major(), oldVersion.Minor(), oldVersion.Patch())
 			versionContent = strings.Replace(string(completeVersionContent), oldVersionContent, versionContent, 1)
 		} else {
-			println(fmt.Sprintf("Error reading file for merge `%s` with error: `%s`, creating new one ", filePath, err.Error()))
+			println(fmt.Sprintf("Error reading file for merge `%s` with error: `%s`, creating new one ", gitLocalMetadataPath, err.Error()))
 		}
 	}
 
-	return os.WriteFile(filePath, []byte(versionContent), 0644)
+	return os.WriteFile(gitLocalMetadataPath, []byte(versionContent), 0644)
 }
