@@ -35,28 +35,41 @@ jobs:
     name: Test
     needs: build-test
     runs-on: ubuntu-latest
-    container: "ghcr.io/packagrio/packagr:latest-${{ matrix.package_type }}"
+    container: "ghcr.io/packagrio/packagr:${{ matrix.package_type.image_tag }}"
 
     strategy:
       matrix:
-        package_type: ['chef', 'golang', 'node', 'python', 'ruby', 'generic']
+        package_type:
+          - name: chef
+            image_tag: latest-chef
+          - name: golang
+            image_tag: golang-latest
+          - name: node
+            image_tag: node-latest
+          - name: python
+            image_tag: python-latest
+          - name: ruby
+            image_tag: ruby_latest
+          - name: generic
+            image_tag: latest-ubuntu
+      fail-fast: false
     steps:
       - name: Download test binaries
         uses: actions/download-artifact@v4
         with:
-          name: "test-binary-${{ matrix.package_type }}"
+          name: "test-binary-${{ matrix.package_type.name }}"
       - name: Test
         env:
           GOOS: linux
           GOARCH: amd64
         run: |
           chmod -R +x .
-          ./test-execute.sh ${{ matrix.package_type }}
+          ./test-execute.sh ${{ matrix.package_type.name }}
       - name: Archive
         uses: actions/upload-artifact@v4
         with:
           name: test-coverage
-          path: /coverage/coverage-${{ matrix.package_type }}.txt
+          path: /coverage/coverage-${{ matrix.package_type.name }}.txt
 
   build:
     name: Build
